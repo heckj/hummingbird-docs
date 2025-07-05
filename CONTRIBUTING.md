@@ -14,7 +14,7 @@ Hummingbird documentation is generated using Apple's docc documentation compiler
 ```
 HUMMINGBIRD_VERSION=2.0 ./scripts/build-docc.sh
 ```
-If you are editing documentation inside VSCdde, the default build task will run the code above.
+If you are editing documentation inside VS Code, the default build task runs the code above.
 
 ## Testing changes
 
