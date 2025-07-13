@@ -8,7 +8,7 @@ Mustache template engine.
 
 ## Overview
 
-Mustache is a "logic-less" templating language commonly used in web and mobile platforms. You can find out more about Mustache [here](http://mustache.github.io/mustache.5.html).
+Mustache is a "logic-less" templating language commonly used in web and mobile platforms. You can find out more about it from the [mustache manual](http://mustache.github.io/mustache.5.html).
 
 While swift-mustache has been designed to be used with the Hummingbird server framework, it has no dependencies and can be used as a standalone library.
 
@@ -18,9 +18,9 @@ Load your templates from the filesystem
 ```swift
 let library = MustacheLibrary("folder/my/templates/are/in")
 ```
-This will look for all the files with the extension ".mustache" in the specified folder and subfolders and attempt to load them. Each file is registered with the name of the file (with subfolder, if inside a subfolder) minus the "mustache" extension.
+This will look for all the files with the extension `.mustache` in the specified folder and subfolders and attempt to load them. Each file is registered with the name of the file (with subfolder, if inside a subfolder) minus the `.mustache` extension.
 
-Render an object with a template 
+The following code shows how to render an object with a template:
 ```swift
 let output = library.render(object, withTemplate: "myTemplate")
 ```

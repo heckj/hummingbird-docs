@@ -8,7 +8,7 @@ Overview of Mustache Syntax
 
 ## Overview
 
-Mustache is a "logic-less" templating engine. The core language has no flow control statements. Instead it has tags that can be replaced with a value, nothing, or a series of values. The rest of this article documents the standard mustache tags.
+Mustache is a "logic-less" templating engine. The core language has no flow control statements. Instead it has tags that can be replaced with a value, nothing, or a series of values. This article documents the standard mustache tags.
 
 ### Context
 
@@ -28,18 +28,23 @@ Initially the stack consists of the root context object to render. When the temp
 
 ### Tags
 
-Surround all tags by a double curly bracket `{{}}`. When a tag has a reference to a key, mustache searches for the key from the context at the top of the context stack and returns the associated value. If the key can't be found, then mustache searches the next context down and so on until either a key is found or it reaches the bottom of the stack. If no key is found the output is `nil`. 
+Surround all tags with a double curly bracket `{{}}`.
+When a tag has a reference to a key, mustache searches for the key from the context at the top of the context stack to return the associated value.
+If the key can't be found in the current context, then mustache recursively searches the next context down until either a key is found or it reaches the bottom of the stack.
+If no key is found the output is `nil`, which renders as an empty string.
 
 Use dot notation to reference the child of an associated value of a key, similar to Swift.
-For example, in `{{main.sub}}`, mustache searches the first context for the key `main`. If found, is uses that value for context and searches for the key `sub`.
+For example, in the tag `{{main.sub}}`, mustache searches the first context for the key `main`. If found, is uses that value for context and searches `main` for the key `sub`.
 
-To constrain mustache to search for values in the context at the top of the stack, prefix the variable name with a `.`, for example: `{{.key}}`
+To constrain mustache to search for values in the context at the top of the stack, prefix the variable name with the period (`.`), for example: `{{.key}}`.
+
+Use `{{.}}` to reference only the top of the stack, which can be useful if you present a template with a list.
 
 ### Tag types
 
 - `{{key}}`: Render the value associated with `key` as text. By default this is HTML escaped. Mustache renders a `nil` value as an empty string.
 - `{{{name}}}`: Acts the same as `{{name}}`, except the resulting text is not HTML escaped. You can also use `{{&name}}` to avoid HTML escaping.
-- `{{#section}}`: `#` represents a section block that either renders text once or multiple times depending on the value of the key in the current context. A section begins with `{{#section}}` and ends with `{{/section}}`. If the key represents a Boolean value, it only renders if true. If the key represents an `Optional` it renders if the object is non-nil. If the key represents an `Array` it renders the internals of the section multiple times, once for each element of the `Array`. Otherwise it renders with the selected value pushed onto the top of the context stack.
+- `{{#section}}`: The `#` character represents a section block that either renders text once or multiple times depending on the value of the key in the current context. A section begins with `{{#section}}` and ends with `{{/section}}`. If the key represents a Boolean value, it only renders if true. If the key represents an `Optional` it renders if the object is non-nil. If the key represents an `Array` it renders the internals of the section multiple times, once for each element of the `Array`. Otherwise it renders with the selected value pushed onto the top of the context stack. See <doc:MustacheFeatures#Rendering-sections> for more information.
 - `{{^section}}`: An inverted section (`^`) does the opposite of a section. If the key represents a Boolean value, it renders if the value is false. If the key represents an `Optional` it renders if it is `nil`. If the key represents a `Array` it renders if the `Array` is empty.
 - `{{! comment }}`: `!` indicates a comment tag, which is ignored.
 - `{{>partial}}`: A partial tag (`>`) renders another mustache file, with the current context stack. In Swift Mustache, partial tags only work for templates that are a part of a library, and the tag represents the  name of the referenced template without the ".mustache" extension. See <doc:MustacheFeatures#Partial-templates> for more information.

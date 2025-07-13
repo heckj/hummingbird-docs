@@ -14,7 +14,7 @@ The library provides support for mustache lambdas via the type `MustacheLambda`.
 
 The mustache manual section for rendering lambdas as variables states:
 
-> Manual: If any value found during the lookup is a callable object, such as a function or lambda, this object will be invoked with zero arguments. 
+> Manual: If any value found during the lookup is a callable object, such as a function or lambda, this object will be invoked with zero arguments.
 > The value that is returned is then used instead of the callable object itself.
 >
 > An optional part of the specification states that if the final key in the name is a lambda that returns a string, then that string should be rendered as a Mustache template before interpolation. It will be rendered using the default delimiters (see Set Delimiter below) against the current context.
@@ -23,7 +23,7 @@ Swift Mustache supports both parts of the specification of lambdas when rendered
 
 > If the lambda is rendered as a variable and you supply a closure that accepts a `String` then the supplied `String` is empty.
 
-The examples below are a couple of examples of rendering mustache lambdas as variables. 
+The examples below are a couple of examples of rendering mustache lambdas as variables.
 
 The first lambda in the example returns a tuple, and the second returns a `String` which is parsed as a template.
 ```swift
@@ -100,19 +100,21 @@ For example, given the partial template `included.mustache`:
 Hello world
 ```
 
-Include the content within another template:
+To include this tempalte in another, reference the tag as:
 ```
 {{> included}}
 ```
 
+> Note: partials and templates using inheritance require that you provide the included templates using a library.
+
 ## Template inheritance and parents
 
-Template inheritance allows you to override elements of an included partial. It allows you to create a base page template, or parent as it is called in the mustache manual, and override elements of it with your page content. 
+Template inheritance allows you to override elements of an included partial. It allows you to create a base page template, or parent as it is called in the mustache manual, and override elements of it with your page content.
 
-A parent that includes overriding elements is indicated with a `<`. 
+A parent that includes overriding elements is indicated with a `<`.
 For example, the tag `{{<parent}}` references a template named `parent` that has elements you override.
 The template reference is a section tag, and requires an ending tag: `{{/parent}}`.
-This is different from the included partial reference, which uses `>`. 
+This is different from the included partial reference, which uses `>`.
 
 Inside the section, override tagged sections using a start and stop for the section.
 The start is prefixed with `$`, and the end with `/`. For example: `{{$tag}}contents{{/tag}}`.
@@ -150,7 +152,7 @@ Hello world
 </body>
 ```
 
-Mustache replaces the `{{$head}}` section in `base.mustache` with the `{{$head}}` section included inside the `{{<base}}` partial reference from `mypage.mustache`. 
+Mustache replaces the `{{$head}}` section in `base.mustache` with the `{{$head}}` section included inside the `{{<base}}` partial reference from `mypage.mustache`.
 The same occurs with the `{{$body}}` section.
 
 If a section isn't defined in the template that inherits another, the default value from the template is displayed. 
@@ -160,7 +162,7 @@ For example, if the section `{{$body}}Hello world{{/body}}` isn't included in th
 
 The syntax `{{% var: value}}` can be used to set template rendering configuration variables specific to Swift-Mustache. The only variable you can set at the moment is `CONTENT_TYPE`. This can be set to either to `HTML` or `TEXT`, and defines how variables are escaped. A content type of `TEXT` means no variables are escaped and a content type of `HTML` will do HTML escaping of the rendered text. The content type defaults to `HTML`.
 
-Given input object `<>`, template 
+Given input object `<>`, template:
 ```
 {{%CONTENT_TYPE: HTML}}{{.}}
 ```
